@@ -1,8 +1,8 @@
 openapi: 3.0.3
 info:
-  title: File to delivery public API
+  title: File to transcode public API
   description:
-    This is the public API to configure, operate and monitor the file-to-delivery app.  
+    This is the public API to configure, operate and monitor the file-to-transcode app.  
 
   version: 1.0.0
 
@@ -162,3 +162,23 @@ components:
           type: array
           items: 
             type: string
+        localCopyStatus:
+          type: string
+          enum:
+            - MISSING
+            - SUBMITTED
+            - LOADING
+            - FAILED
+            - READY
+        taskStatus:
+          type: string
+          enum:
+            - QUEUED
+            - SUBMITTED
+            - PROCESSING
+            - FINISHED
+            - FAILED
+            - CANCELING
+            - CANCELED
+            - RECONCILING
+            - REJECTED
