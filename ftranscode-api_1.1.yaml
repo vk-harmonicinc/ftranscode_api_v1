@@ -1,0 +1,164 @@
+openapi: 3.0.3
+info:
+  title: File to delivery public API
+  description:
+    This is the public API to configure, operate and monitor the file-to-delivery app.  
+
+  version: 1.0.0
+
+paths:
+  /filetranscode/v1/job:
+    post:
+      tags:
+       - Job
+      summary: Create File Transcoding Job
+      operationId: createFileTranscodeJob
+      requestBody:
+        description: Create a new file transcoding job
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FileTranscodeJob'
+        required: true
+      responses:
+        '201':
+          description: File Transcoding Job Created
+          content:
+            application/json:
+              schema:
+                type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden   
+        '405':
+          description: Invalid input
+
+  /filetranscode/v1/asset/{id}:
+    get:
+      summary: Get Asset by id
+      tags:
+        - Asset
+      operationId: getAssetById,
+      parameters: 
+          - name: id
+            in: path
+            description: ID of asset to get
+            required: true
+            schema:
+              type: string
+              format: uuid
+      responses: 
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Asset'
+          '401':
+            description: Unauthorized
+          '403':
+            description: Forbidden
+          '404':
+            description: Not Found
+    delete:
+      tags: 
+        - Asset
+      summary: Delete asset
+      description: Delete asset, output files and information on transcoding jobs.
+      operationId: deleteAssetUsing
+      parameters: 
+        - name: id
+          in: path
+          description: ID of asset to delete
+          required: true
+          schema:
+            type: string
+      responses: 
+        '200': 
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+        '204': 
+          description: No Content
+        '401': 
+          description: Unauthorized
+        '403': 
+          description: Forbidden
+
+  /filetranscode/v1/assets:
+    get: 
+      tags: 
+        - Asset
+      summary: Get all assets
+      description: List all existing assets and their output files. Use the limit parameter if there are more than 300 assets were ingested to system
+      operationId: getAssets
+      parameters: 
+        - name: labels
+          in: query
+          description: Query assets by labels, separated by space
+          required: false
+          schema:
+            type: string
+        - name: skip
+          in: query
+          description: Skip this many first results
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: limit
+          in: query
+          description: Show at most this many results
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses: 
+        '200': 
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Asset'
+        '401': 
+          description: Unauthorized
+        '403': 
+          description: Forbidden
+        '404': 
+          description: Not Found
+
+components:
+  schemas:
+    FileTranscodeJob:
+      properties:
+        assetURL:
+          type: string
+        prifile:
+          type: string
+          enum:
+            - STANDART
+            - HIGT_DENSITY
+        labels:
+          type: array
+          items: 
+            type: string
+        drmProfileId:
+          type: string
+
+    Asset:
+      properties:
+        id:
+          type: string
+        urls:
+          type: array
+          items:
+            type: string
+        labels:
+          type: array
+          items: 
+            type: string
