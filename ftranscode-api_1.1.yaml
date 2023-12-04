@@ -150,13 +150,18 @@ components:
         prifile:
           type: string
           enum:
-            - STANDART
-            - HIGT_DENSITY
+            - VOS-IO-FILE-ENC-SD-STANDARD
+            - VOS-IO-FILE-ENC-SD-BASIC
+            - VOS-IO-FILE-ENC-HDP30-STANDARD
+            - VOS-IO-FILE-ENC-HDP30-BASIC
+            - VOS-IO-FILE-ENC-HDP60-STANDARD
+            - VOS-IO-FILE-ENC-HDP60-BASIC
+            - VOS-IO-FILE-ENC-UHD
         labels:
           type: array
           items: 
             type: string
-        drmProfileId:
+        frameRate:
           type: string
 
     Asset:
