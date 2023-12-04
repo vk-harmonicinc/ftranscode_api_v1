@@ -148,6 +148,29 @@ components:
         assetURL:
           type: string
         prifile:
+          $ref: '#/components/schemas/Profile'
+
+        labels:
+          type: array
+          items: 
+            type: string
+
+
+    Profile:
+      properties:
+        outputResolution:
+          type: string
+          enum:
+            - SD
+            - HDP30
+            - HDP60
+            - UHD
+        quality:
+          type: string
+          enum:
+            - Basic
+            - Strandard
+        profileName:
           type: string
           enum:
             - VOS-IO-FILE-ENC-SD-STANDARD
@@ -157,10 +180,6 @@ components:
             - VOS-IO-FILE-ENC-HDP60-STANDARD
             - VOS-IO-FILE-ENC-HDP60-BASIC
             - VOS-IO-FILE-ENC-UHD
-        labels:
-          type: array
-          items: 
-            type: string
         frameRate:
           type: string
 
