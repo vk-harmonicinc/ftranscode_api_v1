@@ -316,6 +316,11 @@ components:
             - HDP30
             - HDP60
             - UHD
+        hdp60Codec:
+          type: string
+          enum:
+            - H264
+            - H265
         quality:
           type: string
           enum:
