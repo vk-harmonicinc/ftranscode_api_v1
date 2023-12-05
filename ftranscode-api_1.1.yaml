@@ -170,16 +170,6 @@ components:
           enum:
             - Basic
             - Strandard
-        profileName:
-          type: string
-          enum:
-            - VOS-IO-FILE-ENC-SD-STANDARD
-            - VOS-IO-FILE-ENC-SD-BASIC
-            - VOS-IO-FILE-ENC-HDP30-STANDARD
-            - VOS-IO-FILE-ENC-HDP30-BASIC
-            - VOS-IO-FILE-ENC-HDP60-STANDARD
-            - VOS-IO-FILE-ENC-HDP60-BASIC
-            - VOS-IO-FILE-ENC-UHD
         frameRate:
           type: string
 
