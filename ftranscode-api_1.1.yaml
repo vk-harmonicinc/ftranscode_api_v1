@@ -309,23 +309,21 @@ components:
 
     Profile:
       properties:
-        outputResolution:
+        profileName:
           type: string
           enum:
-            - SD
-            - HDP30
-            - HDP60
-            - UHD
+            - VOS-IO-FILE-ENC-SD-STANDARD
+            - VOS-IO-FILE-ENC-SD-BASIC
+            - VOS-IO-FILE-ENC-HDP30-STANDARD
+            - VOS-IO-FILE-ENC-HDP30-BASIC
+            - VOS-IO-FILE-ENC-HDP60-STANDARD
+            - VOS-IO-FILE-ENC-HDP60-BASIC
+            - VOS-IO-FILE-ENC-UHD
         hdp60Codec:
           type: string
           enum:
             - H264
             - H265
-        quality:
-          type: string
-          enum:
-            - BASIC
-            - STANDART
         frameRate:
           type: string
           enum:
@@ -370,7 +368,7 @@ components:
       properties:
         id:
           type: string
-        urls:
+        playbackURLs:
           type: array
           items:
             type: string
@@ -378,7 +376,7 @@ components:
           type: array
           items: 
             type: string
-        localCopyStatus:
+        inputAssetIngestStatus:
           type: string
           enum:
             - MISSING
