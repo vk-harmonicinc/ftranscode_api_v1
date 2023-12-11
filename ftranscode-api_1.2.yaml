@@ -1,8 +1,8 @@
 openapi: 3.0.3
 info:
-  title: File to transcode public API
+  title: File transcode public API
   description:
-    This is the public API to configure, operate and monitor the file-to-transcode app.  
+    This is the public API to configure, operate and monitor the file transcoding app.  
 
   version: 1.0.0
 
@@ -10,11 +10,11 @@ paths:
   /fileTranscode/v1/job:
     post:
       tags:
-       - Job
+       - File Transcoding
       summary: Create File Transcoding Job
       operationId: createFileTranscodeJob
       requestBody:
-        description: Create a new file transcoding job
+        description: Create a new file transcoding job using the source asset URLs and a selected transcoding profile. Response will provide an assetId to follow the status and the playback URL to be used once the job will be finalized.
         content:
           application/json:
             schema:
@@ -22,7 +22,7 @@ paths:
         required: true
       responses:
         '201':
-          description: File Transcoding Job Created
+          description: File Transcoding Job Created. The Job is in progress. Check status of the Asset using the assetId.
           content:
             application/json:
               schema:
@@ -36,14 +36,15 @@ paths:
 
   /fileTranscode/v1/asset/{id}:
     get:
-      summary: Get Asset by id
       tags:
-        - Asset
+        - File Transcoding
+      summary: Get Asset by id
+      description: Give information on the Asset including the playback URLs and its availablilty status.
       operationId: getAssetById,
       parameters: 
           - name: id
             in: path
-            description: ID of asset to get
+            description: ID of the asset to get
             required: true
             schema:
               type: string
@@ -63,14 +64,14 @@ paths:
             description: Not Found
     delete:
       tags: 
-        - Asset
+        - File Transcoding
       summary: Delete asset
       description: Delete asset, output files and information on transcoding jobs.
       operationId: deleteAssetUsing
       parameters: 
         - name: id
           in: path
-          description: ID of asset to delete
+          description: ID of the asset to delete
           required: true
           schema:
             type: string
@@ -91,27 +92,27 @@ paths:
   /fileTranscode/v1/assets:
     get: 
       tags: 
-        - Asset
+        - File Transcoding
       summary: Get all assets
-      description: List all existing assets and their output files. Use the limit parameter if there are more than 300 assets were ingested to system
+      description: List all existing assets, their status and their playback URLs. Use the limit parameter if more than 300 assets are currently in the system.
       operationId: getAssets
       parameters: 
         - name: labels
           in: query
-          description: Query assets by labels, separated by space
+          description: Query assets by labels, separated by space.
           required: false
           schema:
             type: string
         - name: startIndex
           in: query
-          description: Skip this many first results
+          description: Skip this many first results.
           required: false
           schema:
             type: integer
             format: int32
         - name: maxResults
           in: query
-          description: Show at most this many results
+          description: Show at most this many results.
           required: false
           schema:
             type: integer
@@ -138,18 +139,21 @@ components:
       properties:
         assetId:
           type: string
+          description: Unique identifier for the asset. It may be used later to check the asset status and informations.
         playbackUrls:
           type: array
           items: 
             type: string
+          description: Playback URLs of the transcoded asset for the different OTT output formats. 
 
     FileTranscodeJob:
       properties:
         assetUrl:
           type: string
+          description: URL of the main (Video/audio) source asset file. It can be a signed URL from a Blob or other storage type.
         profileName:
           type: string
-          description: Just a single string profile name, that has to match a strongly restricted list of existing profiles
+          description: String giving the profile name used for the transcoding picked in the restricted list of existing profiles from the example list.
           example:
             - SD Basic
             - SD Standard
@@ -162,10 +166,12 @@ components:
             - UHD HEVC
         subtitles:
           type: array
+          description: Provide information for sidecar subtitles to be attached to the asset before transcoding. Several subtitle files (with different languages or different types) can be attached.
           items:
             $ref: '#/components/schemas/Subtitle'
         labels:
           type: array
+          description : Provide a list of labels as strings that can be used later for asset filtering in queries.
           items: 
             type: string
 
@@ -174,10 +180,13 @@ components:
       properties:
         subtitleUrl: 
           type: string
+          description: URL of the subtitle sidecar file. It can be a signed URL from a Blob or other storage type.
         language: 
           type: string
+          description: Language of the subtitle in the sidecar file
         subtitleType: 
           type: string
+          description: Type of subtitle in a list of predefined types.
           enum: 
             - NORMAL
             - HARD_OF_HEARING
@@ -186,16 +195,22 @@ components:
       properties:
         id:
           type: string
+          description: Unique identifier for the asset. It may be used to check the asset status and informations.
         playbackUrls:
-          type: array
-          items:
+          type: object
+          description: Playback URLs of the transcoded asset for the different OTT output formats.
+          additionalProperties:
             type: string
+          example:
+            "additionalProp1": "string"
         labels:
           type: array
+          description: Provide a list of labels as strings that can be used later for asset filtering in queries.
           items: 
             type: string
         status:
           type: string
+          description: Provide the status of the transcoding job and of the asset. The playback URLs can be used when asset status is 'Ready'
           enum:
             - LOADING
             - PROCESSING
@@ -203,6 +218,7 @@ components:
             - FAILED
         errorMessage:
           type: string
+          description: Provide information for source cause for asset in 'Failed' state 
 
 
     
