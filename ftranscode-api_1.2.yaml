@@ -155,15 +155,15 @@ components:
           type: string
           description: String giving the profile name used for the transcoding picked in the restricted list of existing profiles from the example list.
           example:
-            - SD Basic
-            - SD Standard
-            - HD Basic
-            - HD Standard 
-            - HD Extended Basic AVC
-            - HD Extended Standard AVC
-            - HD Extended Basic HEVC
-            - HD Extended Standard HEVC
-            - UHD HEVC
+            - SD-Basic
+            - SD-Standard
+            - HD-Basic
+            - HD-Standard
+            - HD-Extended-Basic-H264
+            - HD-Extended-Standard-H264
+            - HD-Extended-Basic-H265
+            - HD-Extended-Standard-H265
+            - UHD-Standard-H265
         subtitles:
           type: array
           description: Provide information for sidecar subtitles to be attached to the asset before transcoding. Several subtitle files (with different languages or different types) can be attached.
