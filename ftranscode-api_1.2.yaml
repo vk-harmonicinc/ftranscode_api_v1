@@ -93,8 +93,8 @@ paths:
     get: 
       tags: 
         - File Transcoding
-      summary: Get all assets
-      description: List all existing assets, their status and their playback URLs. Use the limit parameter if more than 300 assets are currently in the system.
+      summary: Get assets
+      description: List existing assets, their status and their playback URLs. Use the limit parameter if more than 300 assets are currently in the system.
       operationId: getAssets
       parameters: 
         - name: labels
@@ -115,11 +115,10 @@ paths:
           in: query
           description: Show at most this many results.
           required: false
-          default: 0
           schema:
             type: integer
             format: int32
-            default: 0
+            default: 50
       responses: 
         '200': 
           description: OK
