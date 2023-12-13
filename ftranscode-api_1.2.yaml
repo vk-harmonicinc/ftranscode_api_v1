@@ -221,6 +221,3 @@ components:
         errorMessage:
           type: string
           description: Provide information for source cause for asset in 'Failed' state 
-
-
-    
